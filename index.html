@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>A fairly exhaustive implementation of noughts & crosses</title>
+  <img id="image" src="Logo.png" width="400" height="120">
+
+  <meta content="text/html; charset=utf-8"
+        http-equiv="content-type">
+  <link href="main.css"
+        rel="stylesheet"
+        type="text/css">
+</head>
+<body style="background-color:#645465;">
+
+<body>
+  <h1>Noughts & Crosses</h1>
+  <p id="winner-display">The winner is <span id="winner-name"></span></p>
+
+  <div id="grid">
+    <div class="row"
+         id="row-0">
+      <div class="column"
+           id="row-0-column-0"></div>
+      <div class="column"
+           id="row-0-column-1"></div>
+      <div class="column"
+           id="row-0-column-2"></div>
+    </div>
+    <div class="row"
+         id="row-1">
+      <div class="column"
+           id="row-1-column-0"></div>
+      <div class="column"
+           id="row-1-column-1"></div>
+      <div class="column"
+           id="row-1-column-2"></div>
+    </div>
+    <div class="row"
+         id="row-2">
+      <div class="column"
+           id="row-2-column-0"></div>
+      <div class="column"
+           id="row-2-column-1"></div>
+      <div class="column"
+           id="row-2-column-2"></div>
+    </div>
+  </div>
+  <button id="reset-button">Reset</button>
+  <p></p>
+
+<select name="Mode" id="mode">
+     <option value="Pick a game mode">Game mode options</option>
+     <option value="Pick a game mode">----</option>
+
+     <option value="Random Computer">Random Computer</option>
+     <option value="Clever Computer">Clever Computer</option>
+     <option value="Two player">Two player</option>
+
+     </select>
+     <h2 id="pick"></h2>
+     <script> 
+
+          </script>
+
+<form id="form" onsubmit="return false;">
+     <label  id="userInput1Label" for="userInput1">Player 1 name:</label>
+     
+     <input type="text" id="userInput1" />
+     <input type="submit" onclick="othername1();" />
+ </form>
+
+ <form id="form" onsubmit="return false;">
+     <label  id="userInput2Label" for="userInput2">Player 2 name:</label>
+     <input type="text" id="userInput2" />
+     <input id="userInput2SubBut" type="submit" onclick="othername2();" />
+ </form>
+
+<script src="academy.js"
+type="text/javascript"></script> 
+<script src="connectors.js"
+type="text/javascript"></script>
+
+
+</body>
+</html>
