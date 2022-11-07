@@ -128,5 +128,6 @@ function checkForWinner(gridArray){
             }
         }
     }
+    console.log("")
     return winnerBool
 }
