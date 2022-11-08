@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-
-function resetClick(){
+function resetGameVars(){
     grid = [[null,null,null,null,null,null,null],
             [null,null,null,null,null,null,null],
             [null,null,null,null,null,null,null],
@@ -16,6 +15,10 @@ function resetClick(){
     winner = false
     gameOver = false
     currentTurn = firstPlayer
+}
+
+function resetClick(){
+    resetGameVars()
     const winMessage = document.getElementById("winner-display")
     winMessage.style.display = "None";
     clearBoard();
@@ -37,7 +40,7 @@ function drawGrid(grid) {
             if (grid[rowIndex][columnIndex]===null) {
                 continue;
             }
-            const cellText = grid[rowIndex][columnIndex] === "red" ? "⭕" : "❌";
+            const cellText = grid[rowIndex][columnIndex] === "red" ? "🔴" : "🔵";
             document.getElementById(`row-${rowIndex}-column-${columnIndex}`).innerText = cellText;
         }
     }
@@ -87,7 +90,6 @@ function columnClick(columnIndex, event) {
                     highScoreDisp.innerText = gameScore1
                     highScore = gameScore1
                 }
-
                 if (potentialWinner==secondPlayer&&gameScore2>highScore){
                     highScoreDisp.innerText = gameScore2
                     highScore = gameScore2
@@ -104,17 +106,43 @@ function columnClick(columnIndex, event) {
 
 }
 
-// Bind the click events for the grid.
-for (let columnIndex = 0; columnIndex < 7; columnIndex++) {
-    for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
-        const gridPosition = document.getElementById(`row-${rowIndex}-column-${columnIndex}`);
-        gridPosition.addEventListener("click", columnClick.bind(null, columnIndex));
-    }
+function createGrid(){
+    let Container = document.getElementById("container");
+    Container.style.display = "grid"
+    Container.innerHTML = '';
+  
+    let numberOfRows = prompt("How many rows do you want?");
+    let i = 0;
+    let x = numberOfRows * numberOfRows; 
+    document.documentElement.style.setProperty("--columns-row", numberOfRows);
+    for (i =  0; i < x ; i++) {
+      var div = document.createElement("div");
+      document.getElementById("container").appendChild(div);
+  }
 }
 
-// Bind the click event for the reset button.
-const resetButton = document.getElementById("reset-button");
-resetButton.addEventListener("click", resetClick);
+
+function createGamePage(){
+
+    createGrid()
+/* 
+    // Bind the click events for the grid.
+    for (let columnIndex = 0; columnIndex < 7; columnIndex++) {
+        for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
+            const gridPosition = document.getElementById(`row-${rowIndex}-column-${columnIndex}`);
+            gridPosition.addEventListener("click", columnClick.bind(null, columnIndex));
+        }
+    }
+
+    // Bind the click event for the reset button.
+    const resetButton = document.getElementById("reset-button");
+    resetButton.addEventListener("click", resetClick); */
+}
+
+
+const startButton = document.getElementById("start-game");
+startButton.addEventListener("click",createGamePage);
+
 
 // Initialize variables
 let firstPlayer = "red"

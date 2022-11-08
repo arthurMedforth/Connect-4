@@ -1,0 +1,56 @@
+.column {
+    width: 800px;
+    height: 100px;
+    margin: 0px;
+    border: 2px black solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+}
+
+.row {
+    width: 800px;
+    margin: 0px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.marker {
+    width: 80px;
+    height: 80px;
+}
+
+#winner-display {
+    display: none;
+    background-color: red;
+    color: white;
+}
+
+body {
+    text-align: center;
+}
+
+#reset-button{
+    margin-top: 10px;
+}
+
+:root {
+    --columns-row: 2;
+  }
+  
+   
+#container {
+    display: none;
+    margin: 0 auto;
+    grid-template-columns: repeat(var(--columns-row), 1fr);
+    grid-template-rows: repeat(var(--columns-row), 1fr);
+    width: 500px;
+    height: 500px;
+}
+
+div {
+
+    border: 1px solid #000;
+
+}

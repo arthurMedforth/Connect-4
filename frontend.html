@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Run window</title>
+            <link href="dynamicMain.css"
+            rel="stylesheet"
+            type="text/css">
+        </head>
+        <body>
+            <h1>Poor implementation of Connect 4</h1>
+            <p id="winner-display"></p>
+
+            <select name="rowNumber" id="row-number=dropdown">
+                <option value="">--select--</option>
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+            </select>
+
+            <select name="colNumber" id="col-number=dropdown">
+                <option value="">--select--</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+                <option value=6>6</option>
+                <option value=7>7</option>
+            </select>
+
+            <button id="start-game">Start Playing!</button>
+
+            <div id="container"></div>
+        </body>
+
+        <script src="binding.js"></script>
+
+    </html>

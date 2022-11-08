@@ -44,7 +44,6 @@ function getNextElement(current_row,current_col,current_trend){
     
 }
 
-
 function patternFinder(direction,numberInPattern,row,col,grid){
     let directionArray = ["left","right","up","down","diagUpRight","diagDownRight","diagDownLeft","diagUpLeft"]
     let rowToCheck
@@ -128,6 +127,5 @@ function checkForWinner(gridArray){
             }
         }
     }
-    console.log("")
     return winnerBool
 }
