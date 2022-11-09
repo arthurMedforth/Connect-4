@@ -1,17 +1,24 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 function resetGameVars(){
-    grid = [[null,null,null,null,null,null,null],
-            [null,null,null,null,null,null,null],
-            [null,null,null,null,null,null,null],
-            [null,null,null,null,null,null,null],
-            [null,null,null,null,null,null,null],
-            [null,null,null,null,null,null,null]]
+    // Number of rows and columns
+    let numberOfRows = document.getElementById("row-number=dropdown");
+    let numberOfCols =  document.getElementById("col-number=dropdown");
+ 
+    gameScore1 = numberOfCols.value*numberOfRows.value
+    gameScore2 = numberOfCols.value*numberOfRows.value
+
+    grid = [];
+    for (let i = 0; i < numberOfRows.value; i++) {
+         grid[i] = [];
+         for (let j = 0; j < numberOfCols.value; j++){
+            grid[i][j] = null
+         }
+    }
 
     firstPlayer = "red"
     secondPlayer = "blue"
-    gameScore1 = 42
-    gameScore2 = 42
+
     winner = false
     gameOver = false
     currentTurn = firstPlayer
@@ -85,14 +92,32 @@ function columnClick(columnIndex, event) {
             drawGrid(grid)
             if (winner){
                 gameOver = true
-                const highScoreDisp = document.getElementById("highscore");
                 if (potentialWinner==firstPlayer&&gameScore1>highScore){
-                    highScoreDisp.innerText = gameScore1
                     highScore = gameScore1
+                    //Add to table
+                    let nameCell = document.createElement("td")
+                    let hsCell = document.createElement("td")
+                    let newRow = document.createElement("tr")
+
+                    nameCell.innerHTML = player1Name
+                    hsCell.innerHTML = highScore
+                    newRow.append(nameCell)
+                    newRow.append(hsCell)
+
+                    document.getElementById("highscore-table-entries").appendChild(newRow)
                 }
                 if (potentialWinner==secondPlayer&&gameScore2>highScore){
-                    highScoreDisp.innerText = gameScore2
                     highScore = gameScore2
+                    let nameCell = document.createElement("td")
+                    let hsCell = document.createElement("td")
+                    let newRow = document.createElement("tr")
+
+                    nameCell.innerHTML = player2Name
+                    hsCell.innerHTML = highScore
+                    newRow.append(nameCell)
+                    newRow.append(hsCell)
+
+                    document.getElementById("highscore-table-entries").appendChild(newRow)
                 }
                 const winMessage = document.getElementById("winner-display")
                 winMessage.innerText = "Winner is "+potentialWinner
@@ -110,25 +135,67 @@ function createGrid(){
     let Container = document.getElementById("container");
     Container.style.display = "grid"
     Container.innerHTML = '';
-  
-    let numberOfRows = prompt("How many rows do you want?");
-    let i = 0;
-    let x = numberOfRows * numberOfRows; 
-    document.documentElement.style.setProperty("--columns-row", numberOfRows);
-    for (i =  0; i < x ; i++) {
-      var div = document.createElement("div");
-      document.getElementById("container").appendChild(div);
-  }
+
+    // Number of rows and columns
+    let numberOfRows = document.getElementById("row-number=dropdown");
+    let numberOfCols =  document.getElementById("col-number=dropdown");
+ 
+    gameScore1 = numberOfCols.value*numberOfRows.value
+    gameScore2 = numberOfCols.value*numberOfRows.value
+
+    grid = [];
+    for (let i = 0; i < numberOfRows.value; i++) {
+         grid[i] = [];
+         for (let j = 0; j < numberOfCols.value; j++){
+            grid[i][j] = null
+         }
+    }
+
+    Container.style.setProperty('--grid-rows', numberOfRows.value);
+    Container.style.setProperty('--grid-cols', numberOfCols.value);
+
+    for (rowIndex = 0; rowIndex < numberOfRows.value; rowIndex++) {
+        for (columnIndex = 0; columnIndex < numberOfCols.value; columnIndex++) {
+            let cell = document.createElement("div");
+            cell.setAttribute("id",`row-${rowIndex}-column-${columnIndex}`);
+
+            container.appendChild(cell).className = "grid-item";
+        }
+    }
+    return [numberOfRows.value,numberOfCols.value]
 }
 
 
 function createGamePage(){
+    const name1Box = document.getElementById("p1")
+    const name2Box = document.getElementById("p2")
+    const name1Label = document.getElementById("p1Label")
+    const name2Label = document.getElementById("p2Label")
+    const highscoreTableLabel = document.getElementById("highscore-table-label")
 
-    createGrid()
-/* 
+    player1Name = name1Box.value
+    player2Name = name2Box.value
+
+    if (player1Name == ""){
+        player1Name = "Player 1"
+    }
+    if (player2Name == ""){
+        player2Name = "Player 2"
+    }
+
+    name1Box.style.display = "none"
+    name1Label.style.display = "none"
+    name2Box.style.display = "none"
+    name2Label.style.display = "none"
+
+    highscoreTableLabel.style.display = "block"
+
+    let dims = createGrid()
+
+    gameOver = false
     // Bind the click events for the grid.
-    for (let columnIndex = 0; columnIndex < 7; columnIndex++) {
-        for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
+    for (let columnIndex = 0; columnIndex < dims[1]; columnIndex++) {
+        for (let rowIndex = 0; rowIndex < dims[0]; rowIndex++) {
             const gridPosition = document.getElementById(`row-${rowIndex}-column-${columnIndex}`);
             gridPosition.addEventListener("click", columnClick.bind(null, columnIndex));
         }
@@ -136,7 +203,8 @@ function createGamePage(){
 
     // Bind the click event for the reset button.
     const resetButton = document.getElementById("reset-button");
-    resetButton.addEventListener("click", resetClick); */
+    resetButton.style.display = 'block'
+    resetButton.addEventListener("click", resetClick);
 }
 
 
@@ -145,18 +213,15 @@ startButton.addEventListener("click",createGamePage);
 
 
 // Initialize variables
+let player1Name
+let player2Name
 let firstPlayer = "red"
 let secondPlayer = "blue"
 let winner = false
 let currentTurn = firstPlayer
 let potentialWinner
 let gameOver = false
-let gameScore1 = 42
-let gameScore2 = 42
+let gameScore1 
+let gameScore2
 let highScore = 0
-let grid = [[null,null,null,null,null,null,null],
-            [null,null,null,null,null,null,null],
-            [null,null,null,null,null,null,null],
-            [null,null,null,null,null,null,null],
-            [null,null,null,null,null,null,null],
-            [null,null,null,null,null,null,null]]
+let grid
