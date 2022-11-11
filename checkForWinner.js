@@ -103,6 +103,7 @@ function checkForWinner(gridArray){
     let directionString = null
     let winnerBool = false
     let numberInPattern
+    let winner = 'no one'
     for (row_index in gridArray){
         for (col_index in gridArray[row_index]){
             numberInPattern = 0
@@ -114,18 +115,20 @@ function checkForWinner(gridArray){
                 numberInPattern = 1
                 resultArray = patternFinder(directionString,numberInPattern,row_index,col_index,gridArray)
                 winnerBool = resultArray[4]
+                winner = resultArray[5]
                 if (winnerBool===true){
                     // Winner was found
                     console.log("Winning pattern ends at: " + [resultArray[2],resultArray[3]])
                     console.log("Direction is "+ resultArray[0])
                     console.log("Number in pattern is:" + resultArray[1])
-                    console.log(resultArray[5]+" wins")
-                    return winnerBool
+                    console.log(winner+" wins")
+
+                    return [winnerBool,winner]
                 }else{
                     continue
                 }
             }
         }
     }
-    return winnerBool
+    return [winnerBool,winner]
 }

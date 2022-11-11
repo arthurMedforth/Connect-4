@@ -28,29 +28,29 @@
 - [✅] A winner can be declared if a line occurs along any part of a row
 - [✅] A winner can be declared if a line occurs along any part of a column
 - [✅] A winner can be declared if a line occurs diagonally
-- [✅] If all positions are occupied and no lines are achieved, then nobody is declared the winner
+- [❌] If all positions are occupied and no lines are achieved, then nobody is declared the winner
 - [✅] If a winner is declared, then no further discs can be placed until the board is reset as per user story 2
  
 **User story 4:**
 
 *As a player of Connect 4, I can track my high score for the current game session (for this story a session won't persist upon a browser refresh)*
-- [✅] High scores shown after every game, no matter who wins
+- [❌] High scores shown after every game, no matter who wins
 - [✅] Score is calculated by subtracting the number of turns made before a winner is declared from 42
-- [✅] Scoreboard tracking player victories
-- [✅] High scores persist across multiple sessions of the game
+- [❌] Scoreboard tracking player victories
+- [❌] High scores persist across multiple sessions of the game
 
 ### Additional functional requirements
 
 **User story 5:**
-- [✅] Let the users enter their names to personalize the win message
-- [✅] Scores are persisted between browser refreshes
+- [🎯] Let the users enter their names to personalize the win message
+- [🎯] Scores are persisted between browser refreshes
 
 ## UI/UX requirements
 
 **User story 6:**
-- [✅] Make it look like a real physical board
+- [🎯] Make it look like a real physical board
 - [🎯] Highlight the winning line on the board when a winner is declared
-- [❌] Animate a counter falling down a column
+- [🎯] Animate a counter falling down a column
 - [🎯] Add sound effects
 
 ### Responsive design
@@ -61,21 +61,21 @@
 ### Accessibility
 
 **User story 8 (stretch):**
-- [✅] Use of semantic HTML elements
-- [🎯] Testing of accessibility using lighthouse or other tool (WCAG score)
+- [❌] Use of semantic HTML elements
+- [❌] Testing of accessibility using lighthouse or other tool (WCAG score)
 
 # Maintainability
 
 ## Clean code
 
 **User story 9:**
-- [✅] Code is well formatted
-- [✅] Code is separated into classes/functions in a logical way
-- [✅] Code is separated into files in a logical way (where necessary)
-- [✅] Functions and variables are clearly named
-- [✅] Comments are put to good use where required
-- [✅] Code is generally easy to follow, solving problems in a direct way
-- [✅] No warning/errors highlighted by a linter (e.g. eslint)
+- [❌] Code is well formatted
+- [❌] Code is separated into classes/functions in a logical way
+- [❌] Code is separated into files in a logical way (where necessary)
+- [❌] Functions and variables are clearly named
+- [❌] Comments are put to good use where required
+- [❌] Code is generally easy to follow, solving problems in a direct way
+- [❌] No warning/errors highlighted by a linter (e.g. eslint)
 
 **User story 10:**
 - [✅] Consistent use of a paradigm (functional, OOP, MVC, etc.)
@@ -137,7 +137,7 @@ Summary: A user story is an informal, general explanation of a software feature 
 - [🎯] AI player ---MAYBE USE MINMAX ALG
 
 **User story 21 (stretch):**
-- [❌] Let the user choose the size of board they want to play on
+- [✅] Let the user choose the size of board they want to play on
 
 **User story 22 (stretch):**
 - [❓] Extra ideas at developer's discretion 
