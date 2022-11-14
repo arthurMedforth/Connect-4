@@ -11,7 +11,7 @@ console.log(hashMap[14])
 
 console.log(hashMap.keySet())
  */
-
+/* 
 class connect4Player{
 
 
@@ -28,5 +28,11 @@ let Art = new connect4Player("Arthur",12)
 // Add to object array
 console.log(Art.name)
 console.log(Art.highscore)
-
+ */
 // Could instantiate new player object after checking that 
+
+const arr1 = new Array(1000)
+const arr = [...new Array(1000)]
+
+console.log(arr1[1])
+console.log(arr[1])

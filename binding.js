@@ -4,7 +4,7 @@
 function resetGameVars(){
     // Create game 2D array
     createGameStateArray()
-    // Assign player colours
+    // Assign player colors
     firstPlayer = "red"
     secondPlayer = "blue"
     // Reset game variables
@@ -44,7 +44,7 @@ function drawGrid() {
             }
             // Get "counter" span element
             const currentCounter = document.getElementById(`row-${rowIndex}-column-${columnIndex}`).querySelector('span')
-            // Set element colour depending on game state value
+            // Set element color depending on game state value
             if (grid[rowIndex][columnIndex]=="red"){
                 currentCounter.style.backgroundColor = "red"
             }else{
@@ -84,7 +84,7 @@ function takeTurn(columnIndex){
             rowCount--
         }    
     }
-    return !notAllowed
+    return [!notAllowed,rowCount]
 }
 
 function endGame(){
@@ -117,11 +117,14 @@ function columnClick(columnIndex, event) {
     // Game not won yet
     if (!gameOver){
         // Take turn based on column click event
-        let successfulTurn = takeTurn(columnIndex)
+        let takeTurnArr = takeTurn(columnIndex)
+        successfulTurn = takeTurnArr[0]
+        rowIndex = takeTurnArr[1]
         // If this turn was allowed
         if (successfulTurn){
+            let lastMove = [rowIndex,columnIndex]
             // Check game state grid for winning condition
-            let checkWinnerArray = checkForWinner(grid)
+            let checkWinnerArray = checkForWinner(grid,lastMove)
             winnerBool = checkWinnerArray[0]
             winner = checkWinnerArray[1]
             // Update the HTML container
@@ -172,7 +175,6 @@ function createGrid(){
     }
 }
 
-
 function createGamePage(){
     // Get user input for player name
     player1Name = name1Box.value
@@ -190,7 +192,6 @@ function createGamePage(){
     name1Label.style.display = "none"
     name2Box.style.display = "none"
     name2Label.style.display = "none"
-
     highscoreTableLabel.style.display = 'inline-block'
 
     createGrid()
@@ -213,7 +214,7 @@ function createGamePage(){
 const startButton = document.getElementById("start-game");
 startButton.addEventListener("click",createGamePage);
 
-// Initialize variables
+// Initialize 
 let player1Name
 let player2Name
 let firstPlayer = "red"
