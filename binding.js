@@ -38,17 +38,15 @@ function drawGrid() {
     clearBoard()
     for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
         for (let columnIndex = 0; columnIndex < grid[rowIndex].length; columnIndex++) {
-            if (grid[rowIndex][columnIndex]===null) {
-                // Leave current grid space empty if null in game state grid
-                continue;
-            }
             // Get "counter" span element
             const currentCounter = document.getElementById(`row-${rowIndex}-column-${columnIndex}`).querySelector('span')
             // Set element color depending on game state value
             if (grid[rowIndex][columnIndex]=="red"){
                 currentCounter.style.backgroundColor = "red"
-            }else{
+            }else if(grid[rowIndex][columnIndex]=="blue"){
                 currentCounter.style.backgroundColor = "blue"
+            }else{
+                currentCounter.style.backgroundColor = "white"
             }
         }
     }
@@ -92,14 +90,21 @@ function endGame(){
     const nameCell = document.createElement("td")
     const hsCell = document.createElement("td")
     const newRow = document.createElement("tr")
-    if (winner==firstPlayer&&gameScore1>highScore){
-        highScore = gameScore1
+
+    if (winner == firstPlayer && (gameScore1 > player1Obj.highscore)){
+        player1Obj.highscore = gameScore1
+        player1Obj.wins++
         nameCell.innerHTML = player1Name
     }
-    if (winner==secondPlayer&&gameScore2>highScore){
-        highScore = gameScore2
+    if (winner == secondPlayer && (gameScore2 > player2Obj.highscore)){
+        player2Obj.highscore = gameScore2
+        player1Obj.wins++
         nameCell.innerHTML = player2Name
     }
+    player1Obj.gamesPlayed++
+    player2Obj.gamesPlayed++
+
+    // REFACTOR THIS CODE IN OTHER FUNCTION
     // Add to table
     hsCell.innerHTML = highScore
     newRow.append(nameCell)
@@ -140,7 +145,6 @@ function columnClick(columnIndex, event) {
     }else{
         console.log("Game over - press reset to play again")
     }
-
 }
 
 function createGameStateArray(){
@@ -155,15 +159,12 @@ function createGameStateArray(){
     }
 }
 
-
 function createGrid(){
     Container.style.display = "grid"
     Container.innerHTML = '';
     Container.style.setProperty('--grid-rows', numberOfRows.value);
     Container.style.setProperty('--grid-cols', numberOfCols.value);
-
     createGameStateArray()
-
     for (rowIndex = 0; rowIndex < numberOfRows.value; rowIndex++) {
         for (columnIndex = 0; columnIndex < numberOfCols.value; columnIndex++) {
             const cell = document.createElement("div");
@@ -171,6 +172,7 @@ function createGrid(){
             const counter = document.createElement("span")
             cell.appendChild(counter).className = "counter"
             container.appendChild(cell).className = "grid-item"
+            counter.style.backgroundColor = "white"            
         }
     }
 }
@@ -187,6 +189,13 @@ function createGamePage(){
     if (player2Name == ""){
         player2Name = "Player 2"
     }
+
+    // Create two new player objects 
+    player1Obj = new connect4Player(player1Name)
+    player2Obj = new connect4Player(player2Name)
+
+    // Push into player array
+    playerLog.push(player1Obj, player2Obj)
 
     name1Box.style.display = "none"
     name1Label.style.display = "none"
@@ -225,9 +234,7 @@ let potentialWinner
 let gameOver = false
 let gameScore1 
 let gameScore2
-let highScore = 0
 let grid
-let highscoreHash
 const numberOfRows = document.getElementById("row-number=dropdown");
 const numberOfCols =  document.getElementById("col-number=dropdown");
 const Container = document.getElementById("container");
@@ -237,3 +244,4 @@ const name1Label = document.getElementById("p1Label")
 const name2Label = document.getElementById("p2Label")
 const highscoreTableLabel = document.getElementById("highscore-table-label")
 const resetButton = document.getElementById("reset-button");
+let playerLog = []

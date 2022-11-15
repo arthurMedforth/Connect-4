@@ -11,28 +11,49 @@ console.log(hashMap[14])
 
 console.log(hashMap.keySet())
  */
-/* 
-class connect4Player{
-
-
-    constructor(name,highscore=-1){
-        this.name = name
-        this.highscore = highscore
+function reorderObjects(a,b) {
+    if (a.highscore < b.highscore){
+        return 1;
+    } else if (a.highscore > b.highscore){
+        return -1;
+    } else {
+        return 0;
     }
-
-    
 }
 
+class connect4Player{
+    constructor(name, highscore=0, wins=0, gamesPlayed=0){
+        this.name = name
+        this.highscore = highscore
+        this.wins = wins
+        this.gamesPlayed = gamesPlayed
+    }
+}
+
+let playerLog = []
 // Check if name in current object array
-let Art = new connect4Player("Arthur",12)
-// Add to object array
-console.log(Art.name)
-console.log(Art.highscore)
+let player1 = new connect4Player("Arthur")
+let player2 = new connect4Player("Jonny")
+let player3 = new connect4Player("Michael")
+let player4 = new connect4Player("Seth")
+let player5 = new connect4Player("Ben")
+
+player1.highscore = 31
+player2.highscore = 35
+player3.highscore = 34
+player4.highscore = 31
+player5.highscore = 28
+
+playerLog.push(player1,player2,player3,player4,player5)
+playerLog.sort(reorderObjects);
+console.log(playerLog)
+
+/* 
+const arr = [101, 102, 103];
+const index = [1, 0, 2];
+
+const output = index.map(i => arr[i]);
+console.log(output);
  */
-// Could instantiate new player object after checking that 
 
-const arr1 = new Array(1000)
-const arr = [...new Array(1000)]
-
-console.log(arr1[1])
-console.log(arr[1])
+  

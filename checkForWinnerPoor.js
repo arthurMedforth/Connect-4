@@ -99,25 +99,36 @@ function patternFinder(direction,numberInPattern,row,col,grid){
 }
 
 function checkForWinner(gridArray,lastMove){
-    console.log("this is running")
     let directionString = null
     let winnerBool = false
     let numberInPattern
     let winner = 'no one'
     let lastMoveRow = lastMove[0]
     let lastMoveCol = lastMove[1]
-    numberInPattern = 0
-    directionString = null
-    numberInPattern = 1
-    resultArray = patternFinder(directionString,numberInPattern,lastMoveRow,lastMoveCol,gridArray)
-    winnerBool = resultArray[4]
-    winner = resultArray[5]
-    if (winnerBool===true){
-        // Winner was found
-        console.log("Winning pattern ends at: " + [resultArray[2],resultArray[3]])
-        console.log("Direction is "+ resultArray[0])
-        console.log("Number in pattern is:" + resultArray[1])
-        console.log(winner+" wins")
+    for (let rowInd = lastMoveRow; rowInd<gridArray.length; rowInd++){
+        for (let colInd = lastMoveCol; colInd<gridArray[rowInd].length; colInd++){
+            numberInPattern = 0
+            directionString = null
+            // if the current cell is null, continue iterating
+            if (gridArray[rowInd][colInd]===null){
+                continue
+            }else{
+                numberInPattern = 1
+                resultArray = patternFinder(directionString,numberInPattern,rowInd,colInd,gridArray)
+                winnerBool = resultArray[4]
+                winner = resultArray[5]
+                if (winnerBool===true){
+                    // Winner was found
+                    console.log("Winning pattern ends at: " + [resultArray[2],resultArray[3]])
+                    console.log("Direction is "+ resultArray[0])
+                    console.log("Number in pattern is:" + resultArray[1])
+                    console.log(winner+" wins")
+                    return [winnerBool,winner]
+                }else{
+                    continue
+                }
+            }
+        }
     }
     return [winnerBool,winner]
 }

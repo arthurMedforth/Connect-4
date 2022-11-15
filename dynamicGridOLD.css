@@ -15,16 +15,17 @@ body {
 
 #container {
     display: grid;
+    margin: 0 auto;
     grid-template-rows: repeat(var(--grid-rows), 1fr);
     grid-template-columns: repeat(var(--grid-cols), 1fr);
-    background-color: yellow;
+    max-width: 400px;
 }
   
 .grid-item {
     display: inline-flex;
     padding: 1em;
-    border: 1px solid yellow;
-
+    border: 1px solid rgb(6, 6, 6);
+    
 }
 
 #reset-button {
@@ -37,7 +38,6 @@ body {
     height: 40px;
     width: 40px ;
     border-radius: 50%;    
-    border: 1px solid black;
     display: inline-flex;
 }
 
