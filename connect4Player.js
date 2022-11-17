@@ -9,3 +9,4 @@ class connect4Player{
         this.gamesPlayed = gamesPlayed
     }
 }
+

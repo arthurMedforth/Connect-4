@@ -16,10 +16,10 @@ function resetGameVars(){
 
 // Event handler for reset button
 function resetClick(){
+    clearBoard();
     resetGameVars()
     const winMessage = document.getElementById("winner-display")
     winMessage.style.display = "None";
-    clearBoard();
 }
 
 // Clear down the elements drawn on the board.
@@ -95,21 +95,39 @@ function reorderObjects(a,b) {
     }
 }
 
+function removeChildren (parent) {
+    while (parent.lastChild) {
+        parent.removeChild(parent.lastChild);
+    }
+}
+
 function createHighscoreTable(){
     // Add to table
+    removeChildren(document.getElementById("highscore-table-entries"))
     for (player of playerLog){
-        console.log(player)
-        const hsCell = document.createElement("td")
-        const newRow = document.createElement("tr")
-        const nameCell = document.createElement("td")
+        if (player.highscore===0){
+            continue
+        } else {
+            const newRow = document.createElement("tr")
+            const nameCell = document.createElement("td")
+            const hsCell = document.createElement("td")
+            const winCell = document.createElement("td")
+            const gamesPlayedCell = document.createElement("td")
 
-        nameCell.innerHTML = player.name
-        hsCell.innerHTML = player.highscore
+            nameCell.innerHTML = player.name
+            hsCell.innerHTML = player.highscore
+            winCell.innerHTML = player.wins
+            gamesPlayedCell.innerHTML = player.gamesPlayed
 
-        newRow.append(nameCell)
-        newRow.append(hsCell)
-        document.getElementById("highscore-table-entries").appendChild(newRow)
-    }
+            newRow.append(nameCell)
+            newRow.append(hsCell)
+            newRow.append(winCell)
+            newRow.append(gamesPlayedCell)
+
+            document.getElementById("highscore-table-entries").appendChild(newRow)
+        }
+    }   
+    console.log(playerLog)
 }
 
 function endGame(){
@@ -120,7 +138,7 @@ function endGame(){
     }
     if (winner == secondPlayer && (gameScore2 > player2Obj.highscore)){
         player2Obj.highscore = gameScore2
-        player1Obj.wins++
+        player2Obj.wins++
     }
     player1Obj.gamesPlayed++
     player2Obj.gamesPlayed++
@@ -129,7 +147,7 @@ function endGame(){
     playerLog.sort(reorderObjects);
     // Create highscore table
     createHighscoreTable()
-
+    console.log(playerLog)
     // Create win message
     const winMessage = document.getElementById("winner-display")
     winMessage.innerText = "Winner is "+ winner
@@ -179,6 +197,9 @@ function createGameStateArray(){
 }
 
 function createGrid(){
+    Container = document.createElement("div")
+    document.body.append(Container)
+    Container.setAttribute("id","container")
     Container.style.display = "grid"
     Container.innerHTML = '';
     Container.style.setProperty('--grid-rows', numberOfRows.value);
@@ -190,13 +211,34 @@ function createGrid(){
             cell.setAttribute("id",`row-${rowIndex}-column-${columnIndex}`)
             const counter = document.createElement("span")
             cell.appendChild(counter).className = "counter"
-            container.appendChild(cell).className = "grid-item"
+            Container.appendChild(cell).className = "grid-item"
             counter.style.backgroundColor = "white"            
         }
     }
 }
 
+function processPlayers(){
+    for (let i = 0; i < playerLog.length; i++){
+        if (playerLog[i].name == player1Name){
+            player1Obj = playerLog[i]
+        } else if (playerLog[i].name == player2Name){
+            player2Obj = playerLog[i]
+        } else {
+            continue
+        }
+    }
+    // Create two new player objects 
+    player1Obj = new connect4Player(player1Name)
+    player2Obj = new connect4Player(player2Name)
+}
+
 function createGamePage(){
+    // If this is being called after a game over --> reset function vars
+    if (playerLog.length>0){
+        resetClick()
+        Container.remove()
+    }
+
     // Get user input for player name
     player1Name = name1Box.value
     player2Name = name2Box.value
@@ -209,9 +251,8 @@ function createGamePage(){
         player2Name = "Player 2"
     }
 
-    // Create two new player objects 
-    player1Obj = new connect4Player(player1Name)
-    player2Obj = new connect4Player(player2Name)
+    // Process these names and produce player objects
+    processPlayers()
 
     // Push into player array
     playerLog.push(player1Obj, player2Obj)
@@ -219,7 +260,6 @@ function createGamePage(){
     highscoreTableLabel.style.display = 'inline-block'
 
     createGrid()
-
     gameOver = false
 
     // Bind the click events for the grid.
@@ -241,6 +281,8 @@ startButton.addEventListener("click",createGamePage);
 // Initialize 
 let player1Name
 let player2Name
+let player1Obj
+let player2Obj
 let firstPlayer = "red"
 let secondPlayer = "blue"
 let winner = false
@@ -252,7 +294,6 @@ let gameScore2
 let grid
 const numberOfRows = document.getElementById("row-number=dropdown");
 const numberOfCols =  document.getElementById("col-number=dropdown");
-const Container = document.getElementById("container");
 const name1Box = document.getElementById("p1")
 const name2Box = document.getElementById("p2")
 const name1Label = document.getElementById("p1Label")
@@ -260,3 +301,6 @@ const name2Label = document.getElementById("p2Label")
 const highscoreTableLabel = document.getElementById("highscore-table-label")
 const resetButton = document.getElementById("reset-button");
 let playerLog = []
+let Container
+
+module.exports = takeTurn;

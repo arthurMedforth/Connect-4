@@ -11,7 +11,7 @@ console.log(hashMap[14])
 
 console.log(hashMap.keySet())
  */
-function reorderObjects(a,b) {
+/* function reorderObjects(a,b) {
     if (a.highscore < b.highscore){
         return 1;
     } else if (a.highscore > b.highscore){
@@ -46,8 +46,7 @@ player5.highscore = 28
 
 playerLog.push(player1,player2,player3,player4,player5)
 playerLog.sort(reorderObjects);
-console.log(playerLog)
-
+ */
 /* 
 const arr = [101, 102, 103];
 const index = [1, 0, 2];
@@ -55,5 +54,21 @@ const index = [1, 0, 2];
 const output = index.map(i => arr[i]);
 console.log(output);
  */
+
+const { checkForWinner } = require("./checkForWinner");
+
+// Arrange
+let grid = [
+    [null, null, null, null,null,null,null], 
+    [null, null, null, null,null,null,null], 
+    [null, null, null, null,null,null,null], 
+    [null, 'red', null, null,null,null,null],
+    [null, 'red', 'blue', null,null,null,null],
+    [null, 'red', 'blue', 'blue','blue','blue',null]
+];
+
+let lastTurn = [5,5]
+
+console.log(checkForWinner(grid,lastTurn))
 
   

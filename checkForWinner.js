@@ -51,6 +51,8 @@ function patternFinder(direction,numberInPattern,row,col,grid){
     let winnerFound = false
     let goodRow = parseInt(row)
     let goodCol = parseInt(col)
+    let winner = 'no one'
+    
     // Check neighboring cells - 
     if (direction == null){
         // Check all directions recursively
@@ -73,14 +75,16 @@ function patternFinder(direction,numberInPattern,row,col,grid){
 
         if ((rowToCheck<0 || colToCheck<0 || rowToCheck>grid.length-1 || colToCheck>grid[row].length-1)){
             winnerFound = false
-            return [direction,numberInPattern,row,col,winnerFound]
+            winner = 'no one'
+            return [direction,numberInPattern,row,col,winnerFound,winner]
         }else{
             // Check only the relevant term 
             if (grid[rowToCheck][colToCheck]===grid[row][col]){
                 numberInPattern++
                 if (numberInPattern===4){
                     winnerFound = true
-                    return [direction,numberInPattern,rowToCheck,colToCheck,winnerFound,grid[rowToCheck][colToCheck]]
+                    winner = grid[row][col]
+                    return [direction,numberInPattern,rowToCheck,colToCheck,winnerFound,grid[rowToCheck][colToCheck],winner]
                 }else{
                     retArray = patternFinder(direction,numberInPattern,rowToCheck,colToCheck,grid)
                     direction = retArray[0]
@@ -88,28 +92,37 @@ function patternFinder(direction,numberInPattern,row,col,grid){
                     row = parseInt(retArray[2])
                     col = parseInt(retArray[3])
                     winnerFound = retArray[4]
+                    winner = retArray[5]
                 }
             }else{
                 winnerFound = false
-                return [direction,numberInPattern,row,col,winnerFound]        
+                winner = 'no one'
+                return [direction,numberInPattern,row,col,winnerFound,winner]        
             }
         }       
     }
-    return [direction,numberInPattern,row,col,winnerFound,grid[row][col]]
+    return [direction,numberInPattern,row,col,winnerFound,winner]
 }
 
 function checkForWinner(gridArray,lastMove){
-    console.log("this is running")
+    
+    if (lastMove.length == 0){
+        return [false,'no one']
+    }    
+    
     let directionString = null
     let winnerBool = false
     let numberInPattern
     let winner = 'no one'
     let lastMoveRow = lastMove[0]
     let lastMoveCol = lastMove[1]
+
     numberInPattern = 0
     directionString = null
     numberInPattern = 1
+
     resultArray = patternFinder(directionString,numberInPattern,lastMoveRow,lastMoveCol,gridArray)
+    console.log(resultArray)
     winnerBool = resultArray[4]
     winner = resultArray[5]
     if (winnerBool===true){
@@ -121,3 +134,5 @@ function checkForWinner(gridArray,lastMove){
     }
     return [winnerBool,winner]
 }
+
+module.exports = { checkForWinner };
