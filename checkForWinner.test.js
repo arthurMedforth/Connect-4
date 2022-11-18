@@ -2,147 +2,158 @@
 const checkWinnerFunc = require('./checkForWinner');
 
 describe('When calling the checkForWinner function', () => {
-    test("We return no winner for empty array", () => {
-        // Consider descriptive test names:
-        // "When place is called on an empty row the counter goes to the bottom of the row"
+    describe('When nonsense is input to the function', () => {
+        test("We throw an informative error about the type error", () => {
+            let grid = "I am a grid"
+            let lastTurn = 3
 
-        // Arrange
-        let grid = [
-            [null, null, null, null,null,null,null], 
-            [null, null, null, null,null,null,null], 
-            [null, null, null, null,null,null,null], 
-            [null, null, null, null,null,null,null],
-            [null, null, null, null,null,null,null],
-            [null, null, null, null,null,null,null]
-        ];
+            expect(() => {
+                checkWinnerFunc.checkForWinner(grid,lastTurn);
+            }).toThrow('checkForWinner(_,_) input parameters are of incorrect type');
 
-        let lastTurn = []
+        });
 
-        let expectedOutput = [false, 'no one'];
+        test("We throw an error for an empty board when last move has value", () => {
+            // Consider descriptive test names:
+            // "When place is called on an empty row the counter goes to the bottom of the row"                let grid = "I am a grid"
+            let lastTurn = [0,0]
+            // Arrange
+            let grid = [
+                [null, null, null, null,null,null,null], 
+                [null, null, null, null,null,null,null], 
+                [null, null, null, null,null,null,null], 
+                [null, null, null, null,null,null,null],
+                [null, null, null, null,null,null,null],
+                [null, null, null, null,null,null,null]
+            ];
 
-        // Act
-        const actualOutput = checkWinnerFunc.checkForWinner(grid,lastTurn);
-        // Assert
-        expect(actualOutput).toStrictEqual(expectedOutput);
-    });
+            expect(() => {
+                checkWinnerFunc.checkForWinner(grid,lastTurn);
+            }).toThrow('Board should not be empty if valid last move processed');
 
-    test("No winner declared when less than 4 counters has been played by either player", () => {
-        // Consider descriptive test names:
-        // "When place is called on an empty row the counter goes to the bottom of the row"
+        });
+    }),
+    describe('When a non winning pattern is in the grid', () => {
 
-        // Arrange
-        let grid = [
-            [null, null, null, null,null,null,null], 
-            [null, null, null, null,null,null,null], 
-            [null, null, null, null,null,null,null], 
-            [null, 'red', null, null,null,null,null],
-            [null, 'red', 'blue', null,null,null,null],
-            [null, 'red', 'blue', null,null,null,null]
-        ];
+        test("No winner declared when less than 4 counters has been played by either player", () => {
+            // Consider descriptive test names:
+            // "When place is called on an empty row the counter goes to the bottom of the row"
 
-        let lastTurn = [3,1]
+            // Arrange
+            let grid = [
+                [null, null, null, null,null,null,null], 
+                [null, null, null, null,null,null,null], 
+                [null, null, null, null,null,null,null], 
+                [null, 'red', null, null,null,null,null],
+                [null, 'red', 'blue', null,null,null,null],
+                [null, 'red', 'blue', null,null,null,null]
+            ];
 
-        let expectedOutput = [false, 'no one'];
+            let lastTurn = [3,1]
 
-        // Act
-        const actualOutput = checkWinnerFunc.checkForWinner(grid,lastTurn);
-        // Assert
-        expect(actualOutput).toStrictEqual(expectedOutput);
-    });
+            let expectedOutput = [false, 'no one'];
 
-    test("No winner declared when no space left on board and no winning pattern", () => {
-        // Consider descriptive test names:
-        // "When place is called on an empty row the counter goes to the bottom of the row"
+            // Act
+            const actualOutput = checkWinnerFunc.checkForWinner(grid,lastTurn);
+            // Assert
+            expect(actualOutput).toStrictEqual(expectedOutput);
+        });
 
-        // Arrange
-        let grid = [
-            ['red' , 'blue', 'red' , 'blue','blue','blue','red'], 
-            ['blue', 'red' , 'blue', 'red' ,'blue','red' ,'blue'], 
-            ['red' , 'blue', 'blue', 'blue','red' ,'blue','blue'], 
-            ['blue', 'red' , 'red' , 'blue','red' ,'blue','red'],
-            ['red' , 'red' , 'blue', 'red' ,'blue','red' ,'red'],
-            ['blue', 'red' , 'blue', 'red' ,'red' ,'blue','red']
-        ];
+        test("No winner declared when no space left on board and no winning pattern", () => {
+            // Consider descriptive test names:
+            // "When place is called on an empty row the counter goes to the bottom of the row"
 
-        let lastTurn = [0,0]
+            // Arrange
+            let grid = [
+                ['red' , 'blue', 'red' , 'blue','blue','blue','red'], 
+                ['blue', 'red' , 'blue', 'red' ,'blue','red' ,'blue'], 
+                ['red' , 'blue', 'blue', 'blue','red' ,'blue','blue'], 
+                ['blue', 'red' , 'red' , 'blue','red' ,'blue','red'],
+                ['red' , 'red' , 'blue', 'red' ,'blue','red' ,'red'],
+                ['blue', 'red' , 'blue', 'red' ,'red' ,'blue','red']
+            ];
 
-        let expectedOutput = [false, 'no one'];
+            let lastTurn = [0,0]
 
-        // Act
-        const actualOutput = checkWinnerFunc.checkForWinner(grid,lastTurn);
-        // Assert
-        expect(actualOutput).toStrictEqual(expectedOutput);
-    });
+            let expectedOutput = [false, 'no one'];
 
-    test("Correct winner declared for horizontal win", () => {
-        // Consider descriptive test names:
-        // "When place is called on an empty row the counter goes to the bottom of the row"
+            // Act
+            const actualOutput = checkWinnerFunc.checkForWinner(grid,lastTurn);
+            // Assert
+            expect(actualOutput).toStrictEqual(expectedOutput);
+        });
+    }),
+    describe('When inputting a winning pattern grid', () => {
+        test("Correct winner declared for horizontal win", () => {
+            // Consider descriptive test names:
+            // "When place is called on an empty row the counter goes to the bottom of the row"
 
-        // Arrange
-        let grid = [
-            [null, null, null, null,null,null,null], 
-            [null, null, null, null,null,null,null], 
-            [null, null, null, null,null,null,null], 
-            [null, 'red', null, null,null,null,null],
-            [null, 'red', 'blue', null,null,null,null],
-            [null, 'red', 'blue', 'blue','blue','blue',null]
-        ];
+            // Arrange
+            let grid = [
+                [null, null, null, null,null,null,null], 
+                [null, null, null, null,null,null,null], 
+                [null, null, null, null,null,null,null], 
+                [null, 'red', null, null,null,null,null],
+                [null, 'red', 'blue', null,null,null,null],
+                [null, 'red', 'blue', 'blue','blue','blue',null]
+            ];
 
-        let lastTurn = [5,5]
+            let lastTurn = [5,5]
 
-        let expectedOutput = [true, 'blue'];
+            let expectedOutput = [true, 'blue'];
 
-        // Act
-        const actualOutput = checkWinnerFunc.checkForWinner(grid,lastTurn);
-        // Assert
-        expect(actualOutput).toStrictEqual(expectedOutput);
-    });
+            // Act
+            const actualOutput = checkWinnerFunc.checkForWinner(grid,lastTurn);
+            // Assert
+            expect(actualOutput).toStrictEqual(expectedOutput);
+        });
 
-    test("Correct winner declared for vertical win", () => {
-        // Consider descriptive test names:
-        // "When place is called on an empty row the counter goes to the bottom of the row"
+        test("Correct winner declared for vertical win", () => {
+            // Consider descriptive test names:
+            // "When place is called on an empty row the counter goes to the bottom of the row"
 
-        // Arrange
-        let grid = [
-            [null, null, null, null,null,null,null], 
-            [null, null, null, null,null,null,null], 
-            [null, 'red', null, null,null,null,null], 
-            [null, 'red', null, null,null,null,null],
-            [null, 'red', 'blue', null,null,null,null],
-            [null, 'red', 'blue', 'blue','blue','red',null]
-        ];
+            // Arrange
+            let grid = [
+                [null, null, null, null,null,null,null], 
+                [null, null, null, null,null,null,null], 
+                [null, 'red', null, null,null,null,null], 
+                [null, 'red', null, null,null,null,null],
+                [null, 'red', 'blue', null,null,null,null],
+                [null, 'red', 'blue', 'blue','blue','red',null]
+            ];
 
-        let lastTurn = [2,1]
+            let lastTurn = [2,1]
 
-        let expectedOutput = [true, 'red'];
+            let expectedOutput = [true, 'red'];
 
-        // Act
-        const actualOutput = checkWinnerFunc.checkForWinner(grid,lastTurn);
-        // Assert
-        expect(actualOutput).toStrictEqual(expectedOutput);
-    });
+            // Act
+            const actualOutput = checkWinnerFunc.checkForWinner(grid,lastTurn);
+            // Assert
+            expect(actualOutput).toStrictEqual(expectedOutput);
+        });
 
-    test("Correct winner declared for diagonal win", () => {
-        // Consider descriptive test names:
-        // "When place is called on an empty row the counter goes to the bottom of the row"
+        test("Correct winner declared for diagonal win", () => {
+            // Consider descriptive test names:
+            // "When place is called on an empty row the counter goes to the bottom of the row"
 
-        // Arrange
-        let grid = [
-            [null, null, null, null,null,null,null], 
-            [null, null, null, null,null,null,null], 
-            [null, null, null, 'red',null,null,null], 
-            [null, 'red', 'red', 'blue',null,null,null],
-            [null, 'red', 'blue', 'blue',null,null,null],
-            ['red', 'red', 'blue', 'blue','blue','red',null]
-        ];
+            // Arrange
+            let grid = [
+                [null, null, null, null,null,null,null], 
+                [null, null, null, null,null,null,null], 
+                [null, null, null, 'red',null,null,null], 
+                [null, 'red', 'red', 'blue',null,null,null],
+                [null, 'red', 'blue', 'blue',null,null,null],
+                ['red', 'red', 'blue', 'blue','blue','red',null]
+            ];
 
-        let lastTurn = [2,3]
+            let lastTurn = [2,3]
 
-        let expectedOutput = [true, 'red'];
+            let expectedOutput = [true, 'red'];
 
-        // Act
-        const actualOutput = checkWinnerFunc.checkForWinner(grid,lastTurn);
-        // Assert
-        expect(actualOutput).toStrictEqual(expectedOutput);
-    });
+            // Act
+            const actualOutput = checkWinnerFunc.checkForWinner(grid,lastTurn);
+            // Assert
+            expect(actualOutput).toStrictEqual(expectedOutput);
+        });
+    })
 });

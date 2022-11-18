@@ -24,6 +24,7 @@ function resetClick(){
 
 // Clear down the elements drawn on the board.
 function clearBoard() {
+    console.log(grid)
     for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
         for (let columnIndex = 0; columnIndex < grid[rowIndex].length; columnIndex++) {
             // Get "counter" span element
@@ -127,7 +128,6 @@ function createHighscoreTable(){
             document.getElementById("highscore-table-entries").appendChild(newRow)
         }
     }   
-    console.log(playerLog)
 }
 
 function endGame(){
@@ -147,7 +147,7 @@ function endGame(){
     playerLog.sort(reorderObjects);
     // Create highscore table
     createHighscoreTable()
-    console.log(playerLog)
+
     // Create win message
     const winMessage = document.getElementById("winner-display")
     winMessage.innerText = "Winner is "+ winner
@@ -251,11 +251,19 @@ function createGamePage(){
         player2Name = "Player 2"
     }
 
-    // Process these names and produce player objects
-    processPlayers()
-
-    // Push into player array
-    playerLog.push(player1Obj, player2Obj)
+    try {
+        // Try and pull down local storage
+        console.log("try happened")
+        playerLog = JSON.parse(window.localStorage.getItem('playerLog'));
+        processPlayers()
+        playerLog.push(player1Obj, player2Obj)
+        window.localStorage.setItem("playerLog",JSON.stringify(playerLog))
+    } catch (error) {
+        console.log("catch happened")
+        processPlayers()
+        playerLog.push(player1Obj, player2Obj)
+        window.localStorage.setItem("playerLog",JSON.stringify(playerLog))
+    }
 
     highscoreTableLabel.style.display = 'inline-block'
 
@@ -303,4 +311,3 @@ const resetButton = document.getElementById("reset-button");
 let playerLog = []
 let Container
 
-module.exports = takeTurn;

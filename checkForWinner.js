@@ -105,10 +105,11 @@ function patternFinder(direction,numberInPattern,row,col,grid){
 }
 
 function checkForWinner(gridArray,lastMove){
-    
-    if (lastMove.length == 0){
-        return [false,'no one']
-    }    
+    if (!Array.isArray(gridArray)||lastMove.length!==2){
+        throw('checkForWinner(_,_) input parameters are of incorrect type - not arrays')
+    } else {
+        console.log('input params are OK')
+    }
     
     let directionString = null
     let winnerBool = false
@@ -122,7 +123,6 @@ function checkForWinner(gridArray,lastMove){
     numberInPattern = 1
 
     resultArray = patternFinder(directionString,numberInPattern,lastMoveRow,lastMoveCol,gridArray)
-    console.log(resultArray)
     winnerBool = resultArray[4]
     winner = resultArray[5]
     if (winnerBool===true){
@@ -134,5 +134,3 @@ function checkForWinner(gridArray,lastMove){
     }
     return [winnerBool,winner]
 }
-
-module.exports = { checkForWinner };
